@@ -25,6 +25,8 @@ const workspaces = workspacePaths.reduce((acc, curr) => {
   return acc;
 }, []);
 
+console.log('Update each package version and its dependencies');
+
 // Update each package version and its dependencies
 const workspaceNames = workspaces.map(({ packageJson }) => packageJson.name);
 workspaces.forEach(({ directory, packageJson, packageJsonPath }) => {
@@ -40,6 +42,8 @@ workspaces.forEach(({ directory, packageJson, packageJsonPath }) => {
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
 });
 
+console.log('Commit changes');
+
 // Commit changes
 if (!skipGit) {
   // add changes
@@ -50,12 +54,16 @@ if (!skipGit) {
   execSync(`git tag -m ${version} "${version}"`);
 }
 
+console.log('Publish packages');
+
 // Publish public packages
 workspaces.forEach(({ directory, packageJson }) => {
   if (!packageJson.private) {
     execSync(`cd ${directory} && npm publish`);
   }
 });
+
+console.log('Push changes');
 
 // Push changes
 if (!skipGit) {
