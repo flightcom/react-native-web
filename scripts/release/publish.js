@@ -54,14 +54,14 @@ if (!skipGit) {
   execSync(`git tag -m ${version} "${version}"`);
 }
 
-console.log('Publish packages');
+//console.log('Publish packages');
 
 // Publish public packages
-workspaces.forEach(({ directory, packageJson }) => {
-  if (!packageJson.private) {
-    execSync(`cd ${directory} && npm publish`);
-  }
-});
+//workspaces.forEach(({ directory, packageJson }) => {
+//  if (!packageJson.private) {
+//    execSync(`cd ${directory} && npm publish`);
+//  }
+//});
 
 console.log('Push changes');
 
